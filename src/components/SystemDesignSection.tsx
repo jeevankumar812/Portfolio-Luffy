@@ -26,6 +26,14 @@ const designs = [
     desc: "Comparing different API architectures and choosing the right approach for performance, flexibility, and scalability.",
     link: "https://github.com/jeevankumar812/System-Design/tree/main/Day4",
   },
+
+  {
+    day: "Day 5",
+    title: "Database Design and Data Modeling",
+    desc: "Designing efficient and scalable database schemas, understanding relationships, normalization, indexing, and choosing the right data models for high-performance applications.",
+    link: "https://github.com/jeevankumar812/System-Design/tree/main/Day5",
+  },
+
 ];
 
 const SystemDesignSection = () => {
