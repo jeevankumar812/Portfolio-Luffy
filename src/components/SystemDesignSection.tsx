@@ -68,11 +68,16 @@ const SystemDesignSection = () => {
 
       <div className="container relative z-10">
 
-        {/* ⚔️ TITLE */}
-        <h2 className="text-5xl text-center text-blue-400 mb-20 font-bold">
-          Grand Line Voyage 🗺️
-        </h2>
+       {/* ⚔️ TITLE */}
+<h2 className="text-5xl text-center text-blue-400 mb-6 font-bold">
+  Grand Line Voyage 🗺️
+</h2>
 
+{/* 💀 QUOTE */}
+<p className="text-center text-gray-400 italic max-w-xl mx-auto mb-10 leading-relaxed">
+  "I don’t follow paths… I create my own route through the Grand Line of System Design.  
+  Every concept I conquer brings me one step closer to mastering scalable systems."
+</p>
         {/* 🏴‍☠️ SAGAS */}
         <div className="space-y-28 max-w-5xl mx-auto">
 
