@@ -142,7 +142,7 @@ const AchievementsSection = () => {
         <div className="flex justify-center gap-6 flex-wrap">
           
           <a
-            href="https://leetcode.com/your-username"
+            href="https://leetcode.com/u/kjeevankumar08/"
             target="_blank"
             className="flex items-center gap-2 px-6 py-3 bg-yellow-500 text-black rounded-full font-semibold hover:scale-110 transition"
           >
@@ -150,7 +150,7 @@ const AchievementsSection = () => {
           </a>
 
           <a
-            href="https://www.geeksforgeeks.org/user/your-username"
+            href="https://www.geeksforgeeks.org/profile/jeevankumar08"
             target="_blank"
             className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black rounded-full font-semibold hover:scale-110 transition"
           >

@@ -1,35 +1,33 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
+import nodueImg from "@/assets/nodue.png";
+import blogImg from "@/assets/blog.png";
+import hotelImg from"@/assets/hotel.png"
 
 const projects = [
   {
-    name: "No Due Management System",
+    name: "No - Due Project",
     desc: "Defeated system complexity and automated clearance process.",
-    bounty: "₿ 500,000,000",
-    villain: "Rob Lucci",
-    image: "/assets/lucci.png",
+    image: nodueImg,
     tags: ["Node.js", "MongoDB", "Express", "React"],
-    github: "https://github.com/your-repo",
+    github: "https://github.com/jeevankumar812/No-Due-Project",
     live: "#",
   },
   {
     name: "Hotel Booking System",
     desc: "Conquered booking chaos with scalable backend systems.",
-    bounty: "₿ 320,000,000",
-    villain: "God Enel",
-    image: "/assets/enel.png",
+    image: hotelImg,
     tags: ["MERN", "REST API", "Auth"],
-    github: "https://github.com/your-repo",
+    github: "https://github.com/jeevankumar812/Hotel-Booking-Platform",
     live: "#",
   },
   {
     name: "Blog Website",
     desc: "Built a content system with full CRUD and authentication.",
-    bounty: "₿ 150,000,000",
-    villain: "Hody Jones",
-    image: "/assets/hody.png",
+    
+    image: blogImg,
     tags: ["React", "Node.js", "MongoDB"],
-    github: "https://github.com/your-repo",
+    github: "https://github.com/jeevankumar812/Blog-Website",
     live: "#",
   },
 ];
@@ -72,7 +70,7 @@ const ProjectsSection = () => {
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={project.image}
-                  alt={project.villain}
+                
                   className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                 />
                 <div className="absolute inset-0 bg-black/60"></div>
@@ -80,17 +78,13 @@ const ProjectsSection = () => {
 
               {/* ⚔️ CONTENT */}
               <div className="p-5">
-                <p className="text-xs text-red-400 mb-1">
-                  Defeated: {project.villain}
-                </p>
+                
 
                 <h3 className="text-lg font-bold text-yellow-400">
                   {project.name}
                 </h3>
 
-                <p className="text-red-500 font-semibold text-md mb-2">
-                  {project.bounty}
-                </p>
+              
 
                 <p className="text-sm text-gray-400 mb-3">
                   {project.desc}
@@ -129,9 +123,7 @@ const ProjectsSection = () => {
               </div>
 
               {/* 💀 STAMP */}
-              <div className="absolute top-3 right-3 text-xs bg-red-600 px-2 py-1 rounded-full">
-                Defeated ⚔️
-              </div>
+              
 
             </motion.div>
           ))}

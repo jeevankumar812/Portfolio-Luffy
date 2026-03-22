@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Anchor } from "lucide-react";
 
 const navLinks = [
+  { label: "Home", href: "#" },
   { label: "About", href: "#about" },
   { label: "Crew", href: "#skills" },
   { label: "Adventures", href: "#projects" },
@@ -20,8 +21,14 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 🔥 Smooth Scroll Function (offset fix for navbar)
+  // 🔥 Smooth Scroll Function (Home + Sections)
   const handleScroll = (id: string) => {
+    // 👇 HOME (top of page)
+    if (id === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
     const el = document.querySelector(id);
     if (el) {
       const yOffset = -80; // adjust for navbar height
@@ -41,15 +48,15 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-
+        
         {/* 🏴‍☠️ LOGO */}
-        <div className="flex items-center gap-2 text-yellow-400 font-bold text-xl">
+        <div
+          onClick={() => handleScroll("#")}
+          className="flex items-center gap-2 text-yellow-400 font-bold text-xl cursor-pointer"
+        >
           <Anchor className="w-6 h-6" />
           Jeevan
-          
         </div>
-
-        
 
         {/* ⚔️ NAV LINKS */}
         <div className="hidden md:flex items-center gap-8">

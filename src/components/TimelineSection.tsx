@@ -2,7 +2,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { motion } from "framer-motion";
 
 import mihakImg from "@/assets/mihakk.jpg";
-import crcoImg from "@/assets/crco.jpg";
+import crcoImg from "@/assets/croc.jpg";
 import doflaImg from "@/assets/dofla.jpg";
 import kumaImg from "@/assets/kuma.jpg";
 import hankoImg from "@/assets/hankco.jpg";
@@ -29,7 +29,7 @@ const warlords = [
     skill: "Backend Development",
     desc: "Building APIs, authentication, and server-side logic.",
     image: doflaImg,
-    size: "w-34 h-34",
+    size: "w-42 h-42",
   },
   {
     name: "Bartholomew Kuma",

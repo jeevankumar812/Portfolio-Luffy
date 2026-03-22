@@ -39,7 +39,7 @@ const BountyPoster = () => {
         {/* 🖼️ IMAGE */}
         <div className="text-center mt-6">
           <img
-            src="/post.jpg"
+            src="/profile.jpeg"
             alt="profile"
             className="w-40 h-36 mx-auto  border-4 border-black object-cover"
           />
@@ -53,16 +53,7 @@ const BountyPoster = () => {
           </p>
         </div>
 
-        {/* 💰 BOUNTY */}
-        <div className="mt-6 text-center">
-          <p className="text-sm tracking-widest font-semibold text-black">
-            BOUNTY
-          </p>
-
-          <p className="text-4xl font-black text-black">
-            ₹ 1,100,000
-          </p>
-        </div>
+        
 
         {/* ⚔️ CRIMES */}
         <div className="mt-6 text-sm text-black">

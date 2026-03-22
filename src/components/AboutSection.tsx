@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import profileImg from "@/assets/luff.png";
+import profileImg from "@/assets/profile.jpeg";
 
 const AboutSection = () => {
   return (
@@ -53,7 +53,7 @@ const AboutSection = () => {
 
           {/* 💀 MAIN TITLE (DOMINANT) */}
           <h2 className="text-5xl sm:text-6xl font-extrabold leading-tight">
-            I AM <span className="text-red-500">JEEVAN</span>
+            I AM <span className="text-red-500">Jeevan</span>
           </h2>
 
           <h3 className="text-2xl sm:text-3xl text-yellow-400 font-bold">
@@ -68,8 +68,8 @@ const AboutSection = () => {
 
           {/* 🔥 DSA FLEX */}
           <p className="text-gray-400 leading-relaxed">
-            I’ve fought over <span className="text-red-500 font-bold text-lg">1000+ battles</span>  
-            across <span className="text-yellow-400">LeetCode (400+)</span> and  
+            I’ve fought over <span className="text-red-500 font-bold text-lg">1000+ battles </span>  
+             across <span className="text-yellow-400">LeetCode (400+)</span> and  
             <span className="text-green-400"> GeeksforGeeks (600+)</span>.  
             Earned the GFG T-shirt — proof of consistency.
           </p>
