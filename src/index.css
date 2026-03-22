@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 7%;
+    --foreground: 40 20% 90%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 40 20% 90%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 40 20% 90%;
+
+    --primary: 0 72% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 0 0% 7%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 40 10% 55%;
+
+    --accent: 43 96% 56%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 72% 51%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 40 20% 90%;
+    --sidebar-primary: 0 72% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 40 20% 90%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 72% 51%;
+
+    --gold: 43 96% 56%;
+    --gold-dark: 43 80% 40%;
+    --crimson: 0 72% 51%;
+    --crimson-dark: 0 72% 35%;
+    --ocean: 200 60% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Pirata One', cursive;
+  }
+
+  ::selection {
+    background: hsl(0 72% 51% / 0.4);
+    color: hsl(43 96% 56%);
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
+  .text-crimson {
+    color: hsl(var(--crimson));
+  }
+
+  .bg-ocean {
+    background-color: hsl(var(--ocean));
+  }
+
+  .haki-glow {
+    box-shadow: 0 0 20px hsl(0 72% 51% / 0.4), 0 0 60px hsl(0 72% 51% / 0.1);
+    transition: box-shadow 0.4s ease-out;
+  }
+
+  .haki-glow:hover {
+    box-shadow: 0 0 30px hsl(0 72% 51% / 0.6), 0 0 80px hsl(0 72% 51% / 0.2), 0 0 120px hsl(0 72% 51% / 0.1);
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 20px hsl(43 96% 56% / 0.3), 0 0 60px hsl(43 96% 56% / 0.1);
+    transition: box-shadow 0.4s ease-out;
+  }
+
+  .gold-glow:hover {
+    box-shadow: 0 0 30px hsl(43 96% 56% / 0.5), 0 0 80px hsl(43 96% 56% / 0.15);
+  }
+
+  .glass {
+    background: hsl(0 0% 100% / 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(0 0% 100% / 0.08);
+  }
+
+  .wanted-poster {
+    background: hsl(35 40% 82%);
+    color: hsl(25 30% 15%);
+    border: 3px solid hsl(25 40% 30%);
+    box-shadow: 4px 4px 0 hsl(25 40% 20%);
+    position: relative;
+  }
+
+  .wanted-poster::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      hsl(25 20% 50% / 0.05) 3px,
+      hsl(25 20% 50% / 0.05) 4px
+    );
+    pointer-events: none;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translate(0px, 0px); }
+  25% { transform: translate(5px, -5px); }
+  50% { transform: translate(-5px, 5px); }
+  75% { transform: translate(5px, 5px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.shake {
+  animation: shake 0.3s;
+}
