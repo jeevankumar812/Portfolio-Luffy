@@ -1,48 +1,63 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { motion } from "framer-motion";
 
+import mihakImg from "@/assets/mihakk.jpg";
+import crcoImg from "@/assets/crco.jpg";
+import doflaImg from "@/assets/dofla.jpg";
+import kumaImg from "@/assets/kuma.jpg";
+import hankoImg from "@/assets/hankco.jpg";
+import jinbeImg from "@/assets/jinbe.jpg";
+import gekkoImg from "@/assets/gekko.jpg";
+
 const warlords = [
   {
     name: "Dracule Mihawk",
     skill: "DSA Mastery",
     desc: "Mastering algorithms, recursion, and problem solving.",
-    image: "/assets/mihawk.png",
+    image: mihakImg,
+    size: "w-34 h-34", // ✅ FIXED
   },
   {
     name: "Sir Crocodile",
     skill: "System Design",
     desc: "Designing scalable systems and backend architectures.",
-    image: "/assets/crocodile.png",
+    image: crcoImg,
+    size: "w-50 h-50",
   },
   {
     name: "Donquixote Doflamingo",
     skill: "Backend Development",
     desc: "Building APIs, authentication, and server-side logic.",
-    image: "/assets/doflamingo.png",
+    image: doflaImg,
+    size: "w-34 h-34",
   },
   {
     name: "Bartholomew Kuma",
     skill: "CS Fundamentals",
     desc: "Operating systems, DBMS, networks, and core concepts.",
-    image: "/assets/kuma.png",
+    image: kumaImg,
+    size: "w-42 h-42",
   },
   {
     name: "Boa Hancock",
     skill: "Frontend Development",
     desc: "Creating beautiful, responsive, and interactive UI.",
-    image: "/assets/boa.png",
+    image: hankoImg,
+    size: "w-34 h-38",
   },
   {
     name: "Jinbe",
     skill: "Real-World Projects",
     desc: "Building production-ready MERN stack applications.",
-    image: "/assets/jinbei.png",
+    image: jinbeImg,
+    size: "w-34 h-34",
   },
   {
     name: "Gecko Moria",
     skill: "Multi-Tech Mastery",
     desc: "Exploring new tools, frameworks, and advanced tech.",
-    image: "/assets/moria.png",
+    image: gekkoImg,
+    size: "w-34 h-34",
   },
 ];
 
@@ -70,25 +85,24 @@ const TimelineSection = () => {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{
-                scale: 1.07,
-                boxShadow: "0px 0px 30px rgba(255,0,0,0.6)",
+                scale: 1.05,
+                boxShadow: "0px 0px 25px rgba(255,0,0,0.6)",
               }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="relative rounded-2xl overflow-hidden bg-black text-white shadow-xl group"
+              className="relative  overflow-hidden bg-black text-white shadow-xl group p-6"
             >
               
-              {/* Image */}
-              <div className="relative h-52 overflow-hidden">
+              {/* Image Section (FIXED) */}
+              <div className="flex justify-center items-center mb-4">
                 <img
                   src={warlord.image}
                   alt={warlord.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                  className={`${warlord.size} object-cover  border-2 border-red-500 group-hover:scale-110 transition duration-500`}
                 />
-                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition"></div>
               </div>
 
               {/* Content */}
-              <div className="p-5">
+              <div className="text-center">
                 <h3 className="text-lg font-bold text-red-400">
                   {warlord.name}
                 </h3>
