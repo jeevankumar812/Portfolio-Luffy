@@ -70,7 +70,7 @@ const SystemDesignSection = () => {
 
        {/* ⚔️ TITLE */}
 <h2 className="text-5xl text-center text-blue-400 mb-6 font-bold">
-  Grand Line Voyage 🗺️
+  Grand Line Journey 🗺️
 </h2>
 
 {/* 💀 QUOTE */}
