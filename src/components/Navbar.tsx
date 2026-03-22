@@ -46,15 +46,10 @@ const Navbar = () => {
         <div className="flex items-center gap-2 text-yellow-400 font-bold text-xl">
           <Anchor className="w-6 h-6" />
           Jeevan
-          <span className="text-xs bg-red-500 px-2 py-0.5 rounded-full text-white ml-1">
-            SDE
-          </span>
+          
         </div>
 
-        {/* 💰 BOUNTY */}
-        <div className="hidden md:block text-sm text-red-500 font-semibold">
-          ₿ 1,000,000+
-        </div>
+        
 
         {/* ⚔️ NAV LINKS */}
         <div className="hidden md:flex items-center gap-8">
