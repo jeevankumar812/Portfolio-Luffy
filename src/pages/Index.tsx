@@ -9,6 +9,7 @@ import ContactSection from "@/components/ContactSection";
 import BountyPoster from "@/components/BountyPoster";
 import AchievementsSection from "@/components/AchievementsSection";
 import SystemDesignSection from "@/components/SystemDesignSection";
+import OnePiecePassionSection from "@/components/OnePiecePassionSection";
 
 const Index: React.FC = () => {
   const [gear5, setGear5] = useState<boolean>(false);
@@ -25,6 +26,8 @@ const Index: React.FC = () => {
       <HeroSection gear5={gear5} setGear5={setGear5} />
 
       <AboutSection gear5={gear5} />
+
+      <OnePiecePassionSection gear5={gear5}/>
       <BountyPoster gear5={gear5} />
       <SkillsSection />
       <AchievementsSection gear5={gear5}/>

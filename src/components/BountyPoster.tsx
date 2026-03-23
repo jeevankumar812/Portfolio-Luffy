@@ -14,14 +14,12 @@ const BountyPoster: React.FC<BountyProps> = ({ gear5 }) => {
 
     setRotating(true);
 
-    // ⏳ after rotation completes
     setTimeout(() => {
       setRotating(false);
       setClaimed(true);
 
-      // open resume
       window.open("/resume.pdf", "_blank");
-    }, 1200); // match animation duration
+    }, 1500);
   };
 
   return (
@@ -78,16 +76,28 @@ const BountyPoster: React.FC<BountyProps> = ({ gear5 }) => {
           </ul>
         </div>
 
-        {/* ☠️ SKULL / CLAIM */}
-        <div className="mt-8 flex justify-center">
+        {/* ☠️ SKULL + GESTURE */}
+        <div className="mt-8 flex justify-center items-center gap-4 relative">
+          
+          {!claimed && (
+            <div className="flex items-center gap-2 animate-pulse">
+              <span className="text-sm font-bold tracking-wide text-red-600">
+                Claim Your Bounty
+              </span>
+              <span className="text-2xl animate-bounce">👉</span>
+            </div>
+          )}
+
           {!claimed ? (
             <img
               src={skull}
               alt="skull"
               onClick={handleUnlock}
-              className={`w-16 h-16 cursor-pointer ${
-                rotating ? "spin-once-slow" : ""
-              }`}
+              className={`
+                w-16 h-16 cursor-pointer transition-all duration-300
+                hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.7)]
+                ${rotating ? "spin-once-slow" : ""}
+              `}
             />
           ) : (
             <div className="text-green-700 font-bold text-lg">
@@ -96,7 +106,7 @@ const BountyPoster: React.FC<BountyProps> = ({ gear5 }) => {
           )}
         </div>
 
-        {/* 🔥 BORDER */}
+        {/* 🔥 BORDER EFFECT */}
         <div className="absolute inset-0 border-[3px] opacity-20 border-black pointer-events-none"></div>
       </div>
     </section>

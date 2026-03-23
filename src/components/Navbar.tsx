@@ -13,6 +13,7 @@ const navLinks = [
 
   { label: "Bounty", href: "#bounty" },
   { label: "Journey", href: "#timeline" },
+  { label: "Hobbies", href: "#passion" },
   { label: "Join Crew", href: "#contact" },
 ];
 
