@@ -162,7 +162,7 @@ const HeroSection: React.FC<HeroProps> = ({ gear5, setGear5 }) => {
           {/* 👉 GESTURE TEXT */}
           <div className="flex items-center gap-2 animate-pulse">
             <span className="text-sm font-semibold text-yellow-400">
-              Click here for Professional Portfolio
+              Click here for Professinal Portfolio
             </span>
             <span className="text-xl animate-bounce">👇</span>
           </div>
