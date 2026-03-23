@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Anchor } from "lucide-react";
 
+type Props = {
+  gear5: boolean;
+};
+
 const links = [
   {
     icon: Mail,
@@ -22,14 +26,25 @@ const links = [
   },
 ];
 
-const ContactSection = () => {
+const ContactSection: React.FC<Props> = ({ gear5 }) => {
   return (
     <section
       id="contact"
-      className="py-28 bg-black text-white relative overflow-hidden"
+      className={`py-28 relative overflow-hidden transition-all duration-700 ${
+        gear5
+          ? "bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black"
+          : "bg-black text-white"
+      }`}
     >
-      {/* 🔥 BACKGROUND AURA */}
-      <div className="absolute inset-0 bg-gradient-to-br from-yellow-900/20 via-black to-red-900/20 blur-3xl"></div>
+
+      {/* 🔥 BACKGROUND */}
+      <div
+        className={`absolute inset-0 blur-3xl ${
+          gear5
+            ? "bg-gradient-to-br from-gray-200/40 via-transparent to-gray-300/40"
+            : "bg-gradient-to-br from-yellow-900/20 via-black to-red-900/20"
+        }`}
+      ></div>
 
       <div className="container text-center relative z-10">
 
@@ -37,7 +52,9 @@ const ContactSection = () => {
         <motion.h2
           initial={{ opacity: 0, y: -40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-5xl text-yellow-400 font-extrabold mb-4"
+          className={`text-5xl font-extrabold mb-4 ${
+            gear5 ? "text-black" : "text-yellow-400"
+          }`}
         >
           Join My Crew 🏴‍☠️
         </motion.h2>
@@ -46,7 +63,9 @@ const ContactSection = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-gray-400 mb-14 max-w-xl mx-auto leading-relaxed"
+          className={`mb-14 max-w-xl mx-auto leading-relaxed ${
+            gear5 ? "text-gray-700" : "text-gray-400"
+          }`}
         >
           The Grand Line is dangerous…  
           But every Pirate King needs a strong crew.  
@@ -67,13 +86,23 @@ const ContactSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{
                 scale: 1.1,
-                boxShadow: "0px 0px 30px rgba(255,200,0,0.6)",
+                boxShadow: gear5
+                  ? "0px 0px 20px rgba(0,0,0,0.3)"
+                  : "0px 0px 30px rgba(255,200,0,0.6)",
               }}
               transition={{ delay: i * 0.2 }}
-              className={`relative w-44 h-44 rounded-2xl bg-gradient-to-br ${link.color} flex flex-col items-center justify-center gap-3 text-white font-semibold overflow-hidden`}
+              className={`relative w-44 h-44 rounded-2xl flex flex-col items-center justify-center gap-3 font-semibold overflow-hidden ${
+                gear5
+                  ? "bg-zinc-900 text-white"
+                  : `bg-gradient-to-br ${link.color} text-white`
+              }`}
             >
-              {/* 🔥 GLOW */}
-              <div className="absolute inset-0 opacity-0 hover:opacity-20 bg-white blur-2xl transition"></div>
+              {/* ✨ SOFT GLOW */}
+              <div
+                className={`absolute inset-0 opacity-0 hover:opacity-20 blur-2xl transition ${
+                  gear5 ? "bg-white" : "bg-white"
+                }`}
+              ></div>
 
               {/* ICON */}
               <link.icon className="w-8 h-8" />
@@ -84,20 +113,33 @@ const ContactSection = () => {
               </span>
             </motion.a>
           ))}
+
         </div>
 
-        {/* ⚓ FINAL LINE */}
+        {/* ⚓ FOOTER */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mt-20 pt-10 border-t border-gray-700 flex items-center justify-center gap-2 text-gray-400 text-sm"
+          className={`mt-20 pt-10 border-t flex items-center justify-center gap-2 text-sm ${
+            gear5
+              ? "border-gray-300 text-gray-600"
+              : "border-gray-700 text-gray-400"
+          }`}
         >
-          <Anchor className="w-4 h-4 text-yellow-400" />
+          <Anchor
+            className={`w-4 h-4 ${
+              gear5 ? "text-black" : "text-yellow-400"
+            }`}
+          />
           <span>
-            Built by <span className="text-white font-bold">Jeevan</span> —  
-            chasing the One Piece of Backend Mastery
+            Built by{" "}
+            <span className={gear5 ? "text-black font-bold" : "text-white font-bold"}>
+              Jeevan
+            </span>{" "}
+            — chasing the One Piece of Backend Mastery
           </span>
         </motion.div>
+
       </div>
     </section>
   );

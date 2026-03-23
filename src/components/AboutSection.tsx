@@ -1,12 +1,29 @@
 import { motion } from "framer-motion";
 import profileImg from "@/assets/profile.jpeg";
 
-const AboutSection = () => {
+type AboutProps = {
+  gear5: boolean;
+};
+
+const AboutSection: React.FC<AboutProps> = ({ gear5 }) => {
   return (
-    <section id="about" className="py-28 relative bg-black text-white overflow-hidden">
+    <section
+      id="about"
+      className={`py-28 relative overflow-hidden transition-all duration-700 ${
+        gear5
+          ? "bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black"
+          : "bg-black text-white"
+      }`}
+    >
 
       {/* ⚡ BACKGROUND ENERGY */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-yellow-900/20 blur-3xl"></div>
+      <div
+        className={`absolute inset-0 blur-3xl ${
+          gear5
+            ? "bg-gradient-to-br from-gray-200/40 via-transparent to-gray-300/40"
+            : "bg-gradient-to-br from-red-900/20 via-transparent to-yellow-900/20"
+        }`}
+      ></div>
 
       <div className="container flex flex-col lg:flex-row items-center gap-16 relative z-10">
 
@@ -28,17 +45,24 @@ const AboutSection = () => {
             }}
             className="relative"
           >
-            {/* 🔥 HAKI AURA */}
-            <div className="absolute inset-0 bg-red-500/40 blur-3xl rounded-full animate-pulse"></div>
+            {/* 🔥 AURA */}
+            <div
+              className={`absolute inset-0 blur-3xl rounded-full animate-pulse ${
+                gear5 ? "bg-gray-300/40" : "bg-red-500/40"
+              }`}
+            ></div>
 
-            {/* ⚡ LIGHTNING FLASH */}
+            {/* ⚡ FLASH */}
             <div className="absolute inset-0 bg-white opacity-0 animate-[flash_3s_infinite] rounded-full"></div>
 
             <img
               src={profileImg}
               alt="Jeevan"
-              className="relative w-72 sm:w-80 lg:w-96 rounded-2xl border border-red-500 
-              shadow-[0_0_60px_rgba(255,0,0,0.8)]"
+              className={`relative w-72 sm:w-80 lg:w-96 rounded-2xl border shadow-lg ${
+                gear5
+                  ? "border-gray-300 shadow-[0_0_40px_rgba(0,0,0,0.2)]"
+                  : "border-red-500 shadow-[0_0_60px_rgba(255,0,0,0.8)]"
+              }`}
             />
           </motion.div>
         </motion.div>
@@ -51,43 +75,76 @@ const AboutSection = () => {
           className="flex-1 space-y-6 text-center lg:text-left"
         >
 
-          {/* 💀 MAIN TITLE (DOMINANT) */}
+          {/* 💀 TITLE */}
           <h2 className="text-5xl sm:text-6xl font-extrabold leading-tight">
-            I AM <span className="text-red-500">Jeevan</span>
+            I AM{" "}
+            <span className={gear5 ? "text-black" : "text-red-500"}>
+              Jeevan
+            </span>
           </h2>
 
-          <h3 className="text-2xl sm:text-3xl text-yellow-400 font-bold">
+          <h3
+            className={`text-2xl sm:text-3xl font-bold ${
+              gear5 ? "text-gray-700" : "text-yellow-400"
+            }`}
+          >
             Future Pirate King of Backend ⚔️
           </h3>
 
           {/* ⚡ STORY */}
-          <p className="text-gray-400 leading-relaxed">
-            I’m a B.E student and a backend developer driven by one goal —  
+          <p className={gear5 ? "text-gray-700" : "text-gray-400"}>
+            I’m a B.E student and a backend developer driven by one goal —
             to master systems like conquering the Grand Line.
           </p>
 
-          {/* 🔥 DSA FLEX */}
-          <p className="text-gray-400 leading-relaxed">
-            I’ve fought over <span className="text-red-500 font-bold text-lg">1000+ battles </span>  
-             across <span className="text-yellow-400">LeetCode (400+)</span> and  
-            <span className="text-green-400"> GeeksforGeeks (600+)</span>.  
-            Earned the GFG T-shirt — proof of consistency.
+          {/* 🔥 DSA */}
+          <p className={gear5 ? "text-gray-700" : "text-gray-400"}>
+            I’ve fought over{" "}
+            <span
+              className={`font-bold text-lg ${
+                gear5 ? "text-black" : "text-red-500"
+              }`}
+            >
+              1000+ battles
+            </span>{" "}
+            across{" "}
+            <span className="text-green-500">LeetCode (400+)</span> and{" "}
+            <span className="text-green-600">GeeksforGeeks (600+)</span>.
           </p>
 
           {/* 🚀 SYSTEM DESIGN */}
-          <p className="text-gray-400 leading-relaxed">
-            Now I’m mastering <span className="text-blue-400 font-semibold">System Design</span>,  
-            learning how real systems scale and survive under pressure.
+          <p className={gear5 ? "text-gray-700" : "text-gray-400"}>
+            Now I’m mastering{" "}
+            <span
+              className={`font-semibold ${
+                gear5 ? "text-black" : "text-blue-400"
+              }`}
+            >
+              System Design
+            </span>
+            , learning how real systems scale.
           </p>
 
           {/* 🏴‍☠️ QUOTE */}
-          <p className="text-gray-400 italic border-l-4 border-red-500 pl-4">
-            “I don’t run from challenges… I conquer them.  
+          <p
+            className={`italic border-l-4 pl-4 ${
+              gear5
+                ? "text-gray-600 border-gray-400"
+                : "text-gray-400 border-red-500"
+            }`}
+          >
+            “I don’t run from challenges… I conquer them.
             Every bug is an enemy. Every solution makes me stronger.”
           </p>
 
           {/* ⚡ BADGE */}
-          <div className="inline-block px-4 py-2 bg-red-600 rounded-full font-semibold shadow-lg">
+          <div
+            className={`inline-block px-4 py-2 rounded-full font-semibold shadow-lg ${
+              gear5
+                ? "bg-black text-white"
+                : "bg-red-600 text-white"
+            }`}
+          >
             ⚓ Backend Pirate in Progress
           </div>
 

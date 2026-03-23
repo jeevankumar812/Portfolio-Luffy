@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
+type Props = {
+  gear5: boolean;
+};
+
 const sagas = [
   {
     name: "East Blue Saga",
@@ -13,26 +17,25 @@ const sagas = [
       { day: "Day 5", title: "Database Design and Data Modeling", link: "https://github.com/jeevankumar812/System-Design/tree/main/Day5" },
     ],
   },
-  // {
-  //   name: "Alabasta Saga",
-  //   color: "yellow",
-  //   days: [
-  //     { day: "Day 6", title: "Caching", link: "#" },
-  //     { day: "Day 7", title: "Load Balancing", link: "#" },
-  //     { day: "Day 8", title: "Scalability", link: "#" },
-  //   ],
-  // },
-  // {
-  //   name: "Sky Island Saga",
-  //   color: "purple",
-  //   days: [
-  //     { day: "Day 9", title: "CDN", link: "#" },
-  //     { day: "Day 10", title: "Rate Limiting", link: "#" },
-  //   ],
-  // },
+  {
+    name: "Alabasta Saga",
+    color: "yellow",
+    days: [
+      { day: "Day 6", title: "Caching", link: "#" },
+    ],
+  },
 ];
 
-const getColorClasses = (color: string) => {
+const getColorClasses = (color: string, gear5: boolean) => {
+  if (gear5) {
+    return {
+      text: "text-black",
+      border: "border-gray-500",
+      glow: "",
+      bg: "bg-gray-400/50",
+    };
+  }
+
   const colors: any = {
     blue: {
       text: "text-blue-400",
@@ -46,43 +49,57 @@ const getColorClasses = (color: string) => {
       glow: "shadow-[0_0_25px_rgba(255,200,0,0.8)]",
       bg: "bg-yellow-500/30",
     },
-    purple: {
-      text: "text-purple-400",
-      border: "border-purple-500",
-      glow: "shadow-[0_0_25px_rgba(150,0,255,0.8)]",
-      bg: "bg-purple-500/30",
-    },
   };
 
   return colors[color];
 };
 
-const SystemDesignSection = () => {
+const SystemDesignSection: React.FC<Props> = ({ gear5 }) => {
   return (
     <section
       id="system-design"
-      className="py-28 bg-black text-white relative overflow-hidden"
+      className={`py-28 relative overflow-hidden transition-all duration-700 ${
+        gear5
+          ? "bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black"
+          : "bg-black text-white"
+      }`}
     >
+
       {/* 🌊 BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-black to-black"></div>
+      <div
+        className={`absolute inset-0 ${
+          gear5
+            ? "bg-gradient-to-br from-gray-200/40 via-transparent to-gray-300/40"
+            : "bg-gradient-to-br from-blue-900/20 via-black to-black"
+        }`}
+      ></div>
 
       <div className="container relative z-10">
 
-       {/* ⚔️ TITLE */}
-<h2 className="text-5xl text-center text-blue-400 mb-6 font-bold">
-  Grand Line Journey 🗺️
-</h2>
+        {/* ⚔️ TITLE */}
+        <h2
+          className={`text-5xl text-center mb-6 font-bold ${
+            gear5 ? "text-black" : "text-blue-400"
+          }`}
+        >
+          Grand Line Journey 🗺️
+        </h2>
 
-{/* 💀 QUOTE */}
-<p className="text-center text-gray-400 italic max-w-xl mx-auto mb-10 leading-relaxed">
-  "I don’t follow paths… I create my own route through the Grand Line of System Design.  
-  Every concept I conquer brings me one step closer to mastering scalable systems."
-</p>
+        {/* 💀 QUOTE */}
+        <p
+          className={`text-center italic max-w-xl mx-auto mb-10 leading-relaxed ${
+            gear5 ? "text-gray-700" : "text-gray-400"
+          }`}
+        >
+          "I don’t follow paths… I create my own route through the Grand Line of System Design.  
+          Every concept I conquer brings me one step closer to mastering scalable systems."
+        </p>
+
         {/* 🏴‍☠️ SAGAS */}
         <div className="space-y-28 max-w-5xl mx-auto">
 
           {sagas.map((saga, sagaIndex) => {
-            const theme = getColorClasses(saga.color);
+            const theme = getColorClasses(saga.color, gear5);
 
             return (
               <div key={saga.name}>
@@ -119,17 +136,23 @@ const SystemDesignSection = () => {
                           isLeft ? "justify-start" : "justify-end"
                         }`}
                       >
+
                         {/* ⚡ NODE */}
                         <div
                           className={`absolute left-1/2 w-5 h-5 rounded-full -translate-x-1/2 z-10 ${theme.bg} ${theme.glow}`}
                         ></div>
 
-                        {/* 🧠 CARD */}
+                        {/* 🧠 CARD (ALWAYS DARK) */}
                         <motion.a
                           href={item.link}
                           target="_blank"
-                          whileHover={{ scale: 1.08 }}
-                          className={`w-[45%] bg-zinc-900/80 backdrop-blur-md border ${theme.border} p-6 rounded-xl ${theme.glow} ${
+                          whileHover={{
+                            scale: 1.08,
+                            boxShadow: gear5
+                              ? "0px 0px 20px rgba(0,0,0,0.3)"
+                              : theme.glow,
+                          }}
+                          className={`w-[45%] bg-zinc-900 border border-gray-600 p-6 rounded-xl text-white ${
                             isLeft ? "ml-10" : "mr-10"
                           }`}
                         >
@@ -152,7 +175,11 @@ const SystemDesignSection = () => {
 
                 {/* 🚢 TRANSITION */}
                 {sagaIndex !== sagas.length - 1 && (
-                  <div className={`text-center mt-8 ${theme.text} animate-pulse`}>
+                  <div
+                    className={`text-center mt-8 animate-pulse ${
+                      gear5 ? "text-gray-600" : theme.text
+                    }`}
+                  >
                     🚢 Sailing to Next Saga...
                   </div>
                 )}

@@ -2,7 +2,11 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import nodueImg from "@/assets/nodue.png";
 import blogImg from "@/assets/blog.png";
-import hotelImg from"@/assets/hotel.png"
+import hotelImg from "@/assets/hotel.png";
+
+type Props = {
+  gear5: boolean;
+};
 
 const projects = [
   {
@@ -24,7 +28,6 @@ const projects = [
   {
     name: "Blog Website",
     desc: "Built a content system with full CRUD and authentication.",
-    
     image: blogImg,
     tags: ["React", "Node.js", "MongoDB"],
     github: "https://github.com/jeevankumar812/Blog-Website",
@@ -32,21 +35,42 @@ const projects = [
   },
 ];
 
-const ProjectsSection = () => {
+const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
   return (
-    <section id="projects" className="py-28 bg-black text-white relative">
+    <section
+      id="projects"
+      className={`py-28 relative transition-all duration-700 ${
+        gear5
+          ? "bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black"
+          : "bg-black text-white"
+      }`}
+    >
 
       {/* 🔥 BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-black blur-3xl"></div>
+      <div
+        className={`absolute inset-0 blur-3xl ${
+          gear5
+            ? "bg-gradient-to-br from-gray-200/40 via-transparent to-gray-300/40"
+            : "bg-gradient-to-br from-red-900/20 via-transparent to-black"
+        }`}
+      ></div>
 
       <div className="container relative z-10">
 
         {/* ⚔️ TITLE */}
-        <h2 className="text-5xl text-center text-red-500 font-extrabold mb-4">
+        <h2
+          className={`text-5xl text-center font-extrabold mb-4 ${
+            gear5 ? "text-black" : "text-red-500"
+          }`}
+        >
           Battles Won ⚔️
         </h2>
 
-        <p className="text-gray-400 text-center mb-16 max-w-xl mx-auto">
+        <p
+          className={`text-center mb-16 max-w-xl mx-auto ${
+            gear5 ? "text-gray-700" : "text-gray-400"
+          }`}
+        >
           Every system I built is a villain I defeated on my journey.
         </p>
 
@@ -60,17 +84,18 @@ const ProjectsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{
                 scale: 1.08,
-                boxShadow: "0px 0px 40px rgba(255,0,0,0.7)",
+                boxShadow: gear5
+                  ? "0px 0px 30px rgba(0,0,0,0.3)"
+                  : "0px 0px 40px rgba(255,0,0,0.7)",
               }}
               transition={{ delay: i * 0.2 }}
-              className="relative bg-zinc-900 border border-red-500 rounded-2xl overflow-hidden group"
+              className="relative bg-zinc-900 border border-gray-600 rounded-2xl overflow-hidden group"
             >
 
-              {/* 🖼️ VILLAIN IMAGE */}
+              {/* 🖼️ IMAGE */}
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={project.image}
-                
                   className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                 />
                 <div className="absolute inset-0 bg-black/60"></div>
@@ -78,13 +103,10 @@ const ProjectsSection = () => {
 
               {/* ⚔️ CONTENT */}
               <div className="p-5">
-                
 
                 <h3 className="text-lg font-bold text-yellow-400">
                   {project.name}
                 </h3>
-
-              
 
                 <p className="text-sm text-gray-400 mb-3">
                   {project.desc}
@@ -95,7 +117,7 @@ const ProjectsSection = () => {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2 py-1 bg-zinc-800 border border-zinc-600 rounded"
+                      className="text-xs px-2 py-1 bg-zinc-800 border border-zinc-600 rounded text-gray-300"
                     >
                       {tag}
                     </span>
@@ -115,18 +137,17 @@ const ProjectsSection = () => {
                   <a
                     href={project.live}
                     target="_blank"
-                    className="flex items-center gap-1 text-blue-400"
+                    className={`flex items-center gap-1 ${
+                      gear5 ? "text-black" : "text-blue-400"
+                    }`}
                   >
                     <ExternalLink size={16} /> Live
                   </a>
                 </div>
               </div>
-
-              {/* 💀 STAMP */}
-              
-
             </motion.div>
           ))}
+
         </div>
       </div>
     </section>

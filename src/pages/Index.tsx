@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -9,19 +10,28 @@ import BountyPoster from "@/components/BountyPoster";
 import AchievementsSection from "@/components/AchievementsSection";
 import SystemDesignSection from "@/components/SystemDesignSection";
 
-const Index = () => {
+const Index: React.FC = () => {
+  const [gear5, setGear5] = useState<boolean>(false);
+
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div
+      className={`min-h-screen overflow-x-hidden transition-all duration-700 ${
+        gear5
+          ? "bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black"
+          : "bg-black text-white"
+      }`}
+    >
       <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <BountyPoster/>
+      <HeroSection gear5={gear5} setGear5={setGear5} />
+
+      <AboutSection gear5={gear5} />
+      <BountyPoster gear5={gear5} />
       <SkillsSection />
-      <AchievementsSection/>
-      <ProjectsSection />
-      <SystemDesignSection/>
+      <AchievementsSection gear5={gear5}/>
+      <ProjectsSection gear5={gear5} />
+      <SystemDesignSection gear5={gear5}/>
       <TimelineSection />
-      <ContactSection />
+      <ContactSection gear5={gear5}/>
     </div>
   );
 };
