@@ -80,7 +80,11 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.2 }}
-              className="cursor-pointer bg-zinc-900 border border-gray-700 rounded-2xl overflow-hidden"
+              className={`cursor-pointer rounded-2xl overflow-hidden border ${
+                gear5
+                  ? "bg-white border-gray-300 shadow-lg"
+                  : "bg-zinc-900 border-gray-700"
+              }`}
             >
               <img
                 src={project.image}
@@ -88,10 +92,18 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
               />
 
               <div className="p-4">
-                <h3 className="text-yellow-400 font-bold">
+                <h3
+                  className={`font-bold ${
+                    gear5 ? "text-black" : "text-yellow-400"
+                  }`}
+                >
                   {project.name}
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p
+                  className={`text-sm ${
+                    gear5 ? "text-gray-600" : "text-gray-400"
+                  }`}
+                >
                   {project.desc}
                 </p>
               </div>
@@ -104,7 +116,11 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
       <AnimatePresence>
         {selected && (
           <motion.div
-            className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 px-5"
+            className={`fixed inset-0 flex items-center justify-center z-50 px-5 ${
+              gear5
+                ? "bg-white/80 backdrop-blur-md"
+                : "bg-black/90 backdrop-blur-md"
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -116,13 +132,21 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.4 }}
-              className="relative bg-zinc-900 border border-red-500 rounded-2xl p-6 max-w-5xl w-full flex flex-col md:flex-row gap-10 items-center"
+              className={`relative rounded-2xl p-6 max-w-5xl w-full flex flex-col md:flex-row gap-10 items-center border ${
+                gear5
+                  ? "bg-white border-gray-300 shadow-2xl"
+                  : "bg-zinc-900 border-red-500"
+              }`}
             >
 
-              {/* ❌ CLOSE BUTTON (NOW ON MAIN DIV) */}
+              {/* ❌ CLOSE BUTTON */}
               <button
                 onClick={() => setSelected(null)}
-                className="absolute top-4 right-4 bg-black/70 hover:bg-red-600 p-2 rounded-full transition"
+                className={`absolute top-4 right-4 p-2 rounded-full transition ${
+                  gear5
+                    ? "bg-gray-200 hover:bg-gray-300 text-black"
+                    : "bg-black/70 hover:bg-red-600 text-white"
+                }`}
               >
                 <X size={22} />
               </button>
@@ -133,19 +157,23 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
                 initial={{ x: -100, opacity: 0, scale: 0.9 }}
                 animate={{ x: 0, opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="w-[500px] h-[300px] object-cover rounded-xl border-4 border-red-500 shadow-[0_0_50px_rgba(255,0,0,0.6)]"
+                className={`w-[500px] h-[300px] object-cover rounded-xl border-4 ${
+                  gear5
+                    ? "border-gray-300 shadow-lg"
+                    : "border-red-500 shadow-[0_0_50px_rgba(255,0,0,0.6)]"
+                }`}
               />
 
               {/* ⚡ TECH STACK */}
               <div className="flex flex-col gap-5 w-full">
 
-                <motion.h2
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-2xl font-bold text-red-500 mb-2"
+                <h2
+                  className={`text-2xl font-bold mb-2 ${
+                    gear5 ? "text-black" : "text-red-500"
+                  }`}
                 >
                   Tech Stack Used ⚡
-                </motion.h2>
+                </h2>
 
                 {mernStack.map((tech, i) => (
                   <motion.div
@@ -154,26 +182,33 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.2 }}
                     whileHover={{ scale: 1.05 }}
-                    className="flex items-center gap-4 bg-zinc-800 border border-zinc-700 px-4 py-3 rounded-lg hover:border-red-500 transition"
+                    className={`flex items-center gap-4 px-4 py-3 rounded-lg border transition ${
+                      gear5
+                        ? "bg-gray-100 border-gray-300 hover:bg-gray-200"
+                        : "bg-zinc-800 border-zinc-700 hover:border-red-500"
+                    }`}
                   >
                     <img src={tech.icon} className="w-12 h-12" />
-                    <span className="text-lg font-medium">
+                    <span
+                      className={`text-lg font-medium ${
+                        gear5 ? "text-black" : "text-white"
+                      }`}
+                    >
                       {tech.name}
                     </span>
                   </motion.div>
                 ))}
 
                 {/* LINKS */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex gap-6 mt-6"
-                >
+                <div className="flex gap-6 mt-6">
                   <a
                     href={selected.github}
                     target="_blank"
-                    className="flex items-center gap-2 text-gray-300 hover:text-white"
+                    className={`flex items-center gap-2 ${
+                      gear5
+                        ? "text-gray-700 hover:text-black"
+                        : "text-gray-300 hover:text-white"
+                    }`}
                   >
                     <Github /> Code
                   </a>
@@ -181,11 +216,13 @@ const ProjectsSection: React.FC<Props> = ({ gear5 }) => {
                   <a
                     href={selected.live}
                     target="_blank"
-                    className="flex items-center gap-2 text-blue-400"
+                    className={`flex items-center gap-2 ${
+                      gear5 ? "text-black" : "text-blue-400"
+                    }`}
                   >
                     <ExternalLink /> Live
                   </a>
-                </motion.div>
+                </div>
 
               </div>
 
