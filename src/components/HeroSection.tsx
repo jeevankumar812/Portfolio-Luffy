@@ -44,13 +44,16 @@ const HeroSection: React.FC<HeroProps> = ({ gear5, setGear5 }) => {
 
   // ⚡ GEAR 5
   const handleGear5 = () => {
-    setTransforming(true);
+  // ⚡ Switch instantly (no delay → no flicker)
+  setGear5(true);
 
-    setTimeout(() => {
-      setGear5(true);
-      setTransforming(false);
-    }, 800);
-  };
+  // 💨 Keep animation separately
+  setTransforming(true);
+
+  setTimeout(() => {
+    setTransforming(false);
+  }, 500); // shorter + smoother
+};
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
