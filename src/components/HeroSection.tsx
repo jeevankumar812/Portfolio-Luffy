@@ -1,6 +1,6 @@
 import heroImg from "@/assets/back.png";
 import gear5Img from "@/assets/whitee.png";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Briefcase } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -41,14 +41,11 @@ const HeroSection: React.FC<HeroProps> = ({ gear5, setGear5 }) => {
     return () => clearInterval(typing);
   }, [index]);
 
-  // ⚡ PERFECT SYNC TRANSFORMATION
+  // ⚡ TRANSFORMATION
   const handleGear5 = () => {
     setTransforming(true);
-
-    // ⚡ instant switch (no delay)
     setGear5(true);
 
-    // 💨 very fast animation
     setTimeout(() => {
       setTransforming(false);
     }, 350);
@@ -139,10 +136,10 @@ const HeroSection: React.FC<HeroProps> = ({ gear5, setGear5 }) => {
           </div>
         </motion.div>
 
-        {/* IMAGE */}
-        <motion.div className="flex-1 flex justify-center">
-          <div className="relative">
+        {/* IMAGE + CTA */}
+        <motion.div className="flex-1 flex flex-col items-center gap-6">
 
+          <div className="relative">
             <div
               className={`absolute inset-0 rounded-full blur-3xl ${
                 gear5 ? "bg-gray-300/40" : "bg-red-500/40"
@@ -150,7 +147,7 @@ const HeroSection: React.FC<HeroProps> = ({ gear5, setGear5 }) => {
             ></div>
 
             <motion.img
-              key={gear5 ? "gear5" : "normal"} // 🔥 prevents flicker
+              key={gear5 ? "gear5" : "normal"}
               src={gear5 ? gear5Img : heroImg}
               className="w-80 sm:w-96"
               animate={{
@@ -161,6 +158,34 @@ const HeroSection: React.FC<HeroProps> = ({ gear5, setGear5 }) => {
               transition={{ duration: 0.6 }}
             />
           </div>
+
+          {/* 👉 GESTURE TEXT */}
+          <div className="flex items-center gap-2 animate-pulse">
+            <span className="text-sm font-semibold text-yellow-400">
+              Click here for Professional Portfolio
+            </span>
+            <span className="text-xl animate-bounce">👇</span>
+          </div>
+
+          {/* 💼 PORTFOLIO BUTTON */}
+          <motion.a
+            href="https://portfolio-silk-zeta-69.vercel.app/"
+            target="_blank"
+            whileHover={{ scale: 1.1 }}
+            className={`
+              flex items-center gap-3 px-8 py-4 rounded-xl font-bold
+              shadow-xl transition-all
+              ${
+                gear5
+                  ? "bg-black text-white"
+                  : "bg-white text-black"
+              }
+            `}
+          >
+            <Briefcase size={20} />
+            Portfolio
+          </motion.a>
+
         </motion.div>
 
       </div>
