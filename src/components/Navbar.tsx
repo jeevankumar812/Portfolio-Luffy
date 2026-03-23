@@ -7,6 +7,10 @@ const navLinks = [
   { label: "Crew", href: "#skills" },
   { label: "Adventures", href: "#projects" },
   { label: "System Design", href: "#system-design" },
+
+  // 🔥 NEW (ZORO SECTION)
+  { label: "Battle Records", href: "#achievements" },
+
   { label: "Bounty", href: "#bounty" },
   { label: "Journey", href: "#timeline" },
   { label: "Join Crew", href: "#contact" },
@@ -21,9 +25,8 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 🔥 Smooth Scroll Function (Home + Sections)
+  // 🔥 Smooth Scroll
   const handleScroll = (id: string) => {
-    // 👇 HOME (top of page)
     if (id === "#") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -31,7 +34,7 @@ const Navbar = () => {
 
     const el = document.querySelector(id);
     if (el) {
-      const yOffset = -80; // adjust for navbar height
+      const yOffset = -80;
       const y =
         el.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
@@ -48,7 +51,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-        
+
         {/* 🏴‍☠️ LOGO */}
         <div
           onClick={() => handleScroll("#")}
@@ -64,9 +67,12 @@ const Navbar = () => {
             <button
               key={link.href}
               onClick={() => handleScroll(link.href)}
-              className="text-sm text-gray-400 hover:text-yellow-400 transition duration-300 uppercase"
+              className="relative text-sm text-gray-400 hover:text-yellow-400 transition duration-300 uppercase group"
             >
               {link.label}
+
+              {/* 🔥 COOL UNDERLINE EFFECT */}
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
             </button>
           ))}
         </div>

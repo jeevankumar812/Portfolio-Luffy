@@ -1,41 +1,81 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ExternalLink } from "lucide-react";
 import tshirt from "@/assets/gfg-tshirt.jpeg";
+import zoroIdle from "@/assets/jk.png";
+import zoroAttack from "@/assets/jk2.png";
+import thunder from "@/assets/effect.png";
+import swordSound from "@/assets/sword-sound2.mp3"
 
 type Props = {
   gear5: boolean;
 };
 
-/* 🔥 Animated Counter Hook */
-const useCounter = (target: number) => {
-  const [count, setCount] = useState<number>(0);
+/* 🔥 Counter */
+const useCounter = (target: number, start: boolean) => {
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    let start = 0;
-    const duration = 1500;
+    if (!start) return;
+
+    let startVal = 0;
+    const duration = 1000;
     const step = target / (duration / 16);
 
     const interval = setInterval(() => {
-      start += step;
-      if (start >= target) {
+      startVal += step;
+      if (startVal >= target) {
         setCount(target);
         clearInterval(interval);
       } else {
-        setCount(Math.floor(start));
+        setCount(Math.floor(startVal));
       }
     }, 16);
 
     return () => clearInterval(interval);
-  }, [target]);
+  }, [target, start]);
 
   return count;
 };
 
 const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
-  const total = useCounter(1000);
-  const leetcode = useCounter(400);
-  const gfg = useCounter(600);
+  const [activated, setActivated] = useState(false);
+  const [flash, setFlash] = useState(false);
+  const [attacking, setAttacking] = useState(false);
+
+  // 🔊 AUDIO REF (important fix)
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio(swordSound);
+  }, []);
+
+  const total = useCounter(1000, activated);
+  const leetcode = useCounter(400, activated);
+  const gfg = useCounter(600, activated);
+
+  const handleZoro = () => {
+    if (attacking) return;
+
+    // 🔊 FIXED SOUND PLAY
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }
+
+    // ⚡ FAST FLASH
+    setFlash(true);
+    setAttacking(true);
+    setActivated(true);
+
+    // ⚡ ultra fast flash
+    setTimeout(() => setFlash(false), 120);
+
+    // ⚔️ FRACTION SLASH (IMPORTANT CHANGE)
+    setTimeout(() => {
+      setAttacking(false); // 👈 back instantly
+    }, 180); // 🔥 very fast
+  };
 
   return (
     <section
@@ -46,143 +86,93 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
           : "bg-black text-white"
       }`}
     >
+      {/* ⚡ FLASH */}
+      {flash && (
+        <div className="absolute inset-0 z-40 pointer-events-none">
+          <img
+            src={thunder}
+            className="w-full h-full object-cover animate-flash-ultra"
+          />
+        </div>
+      )}
 
-      {/* 🌌 Background Aura */}
-      <div
-        className={`absolute inset-0 blur-3xl ${
-          gear5
-            ? "bg-gradient-to-r from-gray-200/40 via-transparent to-gray-300/40"
-            : "bg-gradient-to-r from-red-900/30 via-black to-yellow-900/20"
-        }`}
-      ></div>
+      <div className="container relative z-10 flex flex-col lg:flex-row gap-12 items-center">
 
-      <div className="container text-center relative z-10">
+        {/* LEFT */}
+        <div className="flex-1 text-center">
 
-        {/* 🏴‍☠️ Title */}
-        <motion.h2
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className={`text-5xl sm:text-6xl font-bold mb-6 ${
-            gear5 ? "text-black" : "text-red-500"
-          }`}
-        >
-          The Battle Record ⚔️
-        </motion.h2>
+          <h2 className={`text-5xl font-bold mb-6 ${gear5 ? "text-black" : "text-red-500"}`}>
+            The Battle Record ⚔️
+          </h2>
 
-        {/* ✨ Story */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className={`text-lg max-w-2xl mx-auto mb-16 leading-relaxed ${
-            gear5 ? "text-gray-700" : "text-gray-400"
-          }`}
-        >
-          I didn’t just solve problems… I fought battles.  
-          Every question was an enemy. Every solution made me stronger.  
-          This is my journey across the Grand Line of Code.
-        </motion.p>
+          {!activated && (
+            <p className="text-gray-400 mb-10">
+              Click Zoro to unleash your battle stats ⚔️
+            </p>
+          )}
 
-        {/* ⚡ Stats (BLACK BOXES ALWAYS) */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
+          {/* ✅ STATS */}
+          {activated && (
+            <>
+              <div className="grid md:grid-cols-3 gap-6 mb-16">
+                <div className="p-6 bg-black rounded-xl border border-gray-600">
+                  <h3 className="text-4xl text-yellow-400 font-bold">{total}+</h3>
+                  <p className="text-gray-400">Total Battles</p>
+                </div>
 
-          {/* Total */}
-          <motion.div
-            whileHover={{
-              scale: 1.1,
-              boxShadow: gear5
-                ? "0px 0px 30px rgba(0,0,0,0.4)"
-                : "0px 0px 40px rgba(255,0,0,0.7)",
-            }}
-            className="p-8 rounded-2xl bg-black border border-gray-600 text-white"
-          >
-            <h3 className="text-5xl font-bold text-yellow-400">
-              {total}+
-            </h3>
-            <p className="mt-2 text-gray-400">Total Battles Won</p>
-          </motion.div>
+                <div className="p-6 bg-black rounded-xl border border-gray-600">
+                  <h3 className="text-4xl text-orange-400 font-bold">{leetcode}+</h3>
+                  <p className="text-gray-400">LeetCode</p>
+                </div>
 
-          {/* LeetCode */}
-          <motion.div
-            whileHover={{
-              scale: 1.1,
-              boxShadow: "0px 0px 40px rgba(255,165,0,0.7)",
-            }}
-            className="p-8 rounded-2xl bg-black border border-gray-600 text-white"
-          >
-            <h3 className="text-5xl font-bold text-orange-400">
-              {leetcode}+
-            </h3>
-            <p className="mt-2 text-gray-400">LeetCode</p>
-          </motion.div>
+                <div className="p-6 bg-black rounded-xl border border-gray-600">
+                  <h3 className="text-4xl text-green-400 font-bold">{gfg}+</h3>
+                  <p className="text-gray-400">GFG</p>
+                </div>
+              </div>
 
-          {/* GFG */}
-          <motion.div
-            whileHover={{
-              scale: 1.1,
-              boxShadow: "0px 0px 40px rgba(0,255,100,0.7)",
-            }}
-            className="p-8 rounded-2xl bg-black border border-gray-600 text-white"
-          >
-            <h3 className="text-5xl font-bold text-green-400">
-              {gfg}+
-            </h3>
-            <p className="mt-2 text-gray-400">GeeksforGeeks</p>
-          </motion.div>
+              <div className="bg-black p-6 rounded-xl border border-gray-600 mb-10">
+                <img src={tshirt} className="w-32 mx-auto mb-4" />
+                <p className="text-gray-400">
+                  Earned GFG T-shirt after 600+ problems ⚡
+                </p>
+              </div>
 
+              <div className="flex justify-center gap-6">
+                <a
+                  href="https://leetcode.com/u/kjeevankumar08/"
+                  target="_blank"
+                  className="px-6 py-3 bg-yellow-500 text-black rounded-full"
+                >
+                  LeetCode <ExternalLink size={16} />
+                </a>
+
+                <a
+                  href="https://www.geeksforgeeks.org/profile/jeevankumar08"
+                  target="_blank"
+                  className="px-6 py-3 bg-green-500 text-black rounded-full"
+                >
+                  GFG <ExternalLink size={16} />
+                </a>
+              </div>
+            </>
+          )}
         </div>
 
-        {/* 🏆 GFG Achievement (BLACK BOX) */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          whileHover={{
-            scale: 1.05,
-            boxShadow: gear5
-              ? "0px 0px 30px rgba(0,0,0,0.4)"
-              : "0px 0px 40px rgba(0,255,100,0.6)",
-          }}
-          className="max-w-md mx-auto bg-black text-white p-6 rounded-2xl border border-gray-600 mb-16"
-        >
-          <h3 className="text-green-400 font-bold text-lg mb-3">
-            🏆 Proof of Consistency
-          </h3>
-
-          <img
-            src={tshirt}
-            alt="GFG T-shirt"
-            className="w-40 mx-auto rounded-lg"
+        {/* RIGHT ZORO */}
+        <div className="flex-1 flex justify-center">
+          <motion.img
+            key={attacking ? "attack" : "idle"}
+            src={attacking ? zoroAttack : zoroIdle}
+            onClick={handleZoro}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            animate={{
+              scale: attacking ? [1, 1.25, 1] : 1,
+            }}
+            transition={{ duration: 0.2 }} // ⚡ faster
+            className="w-80 cursor-pointer drop-shadow-[0_0_40px_rgba(0,255,100,0.7)]"
           />
-
-          <p className="text-sm text-gray-400 mt-4">
-            Earned GeeksforGeeks T-shirt after solving 600+ problems.
-          </p>
-
-          <p className="text-xs text-gray-500 mt-2 italic">
-            “Consistency beats everything.” ⚡
-          </p>
-        </motion.div>
-
-        {/* 🔗 LINKS */}
-        <div className="flex justify-center gap-6 flex-wrap">
-          
-          <a
-            href="https://leetcode.com/u/kjeevankumar08/"
-            target="_blank"
-            className="flex items-center gap-2 px-6 py-3 bg-yellow-500 text-black rounded-full font-semibold hover:scale-110 transition"
-          >
-            LeetCode <ExternalLink size={16} />
-          </a>
-
-          <a
-            href="https://www.geeksforgeeks.org/profile/jeevankumar08"
-            target="_blank"
-            className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black rounded-full font-semibold hover:scale-110 transition"
-          >
-            GFG <ExternalLink size={16} />
-          </a>
-
         </div>
 
       </div>

@@ -202,3 +202,13 @@
   50% { opacity: 1; }
   100% { opacity: 0; }
 }
+
+@keyframes flashUltra {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.animate-flash-ultra {
+  animation: flashUltra 0.12s ease;
+}
