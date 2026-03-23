@@ -5,7 +5,7 @@ import tshirt from "@/assets/gfg-tshirt.jpeg";
 import zoroIdle from "@/assets/jk.png";
 import zoroAttack from "@/assets/jk2.png";
 import thunder from "@/assets/effect.png";
-import swordSound from "@/assets/sword-sound2.mp3"
+import swordSound from "@/assets/sword-sound2.mp3";
 
 type Props = {
   gear5: boolean;
@@ -43,7 +43,6 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
   const [flash, setFlash] = useState(false);
   const [attacking, setAttacking] = useState(false);
 
-  // 🔊 AUDIO REF (important fix)
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -57,24 +56,27 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
   const handleZoro = () => {
     if (attacking) return;
 
-    // 🔊 FIXED SOUND PLAY
+    // 🔊 SOUND
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {});
     }
 
-    // ⚡ FAST FLASH
+    // ⚡ FORCE RENDER FIRST → THEN ANIMATE
     setFlash(true);
-    setAttacking(true);
-    setActivated(true);
 
-    // ⚡ ultra fast flash
-    setTimeout(() => setFlash(false), 120);
+    requestAnimationFrame(() => {
+      setAttacking(true);
+      setActivated(true);
+    });
 
-    // ⚔️ FRACTION SLASH (IMPORTANT CHANGE)
+    // ⚡ ensure flash visible first time
+    setTimeout(() => setFlash(false), 150);
+
+    // ⚔️ fast slash
     setTimeout(() => {
-      setAttacking(false); // 👈 back instantly
-    }, 180); // 🔥 very fast
+      setAttacking(false);
+    }, 200);
   };
 
   return (
@@ -86,10 +88,11 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
           : "bg-black text-white"
       }`}
     >
-      {/* ⚡ FLASH */}
+      {/* ⚡ THUNDER (FIXED) */}
       {flash && (
-        <div className="absolute inset-0 z-40 pointer-events-none">
+        <div className="absolute inset-0 z-50 pointer-events-none flex items-center justify-center">
           <img
+            key={Date.now()} // 🔥 forces re-render every click
             src={thunder}
             className="w-full h-full object-cover animate-flash-ultra"
           />
@@ -111,7 +114,6 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
             </p>
           )}
 
-          {/* ✅ STATS */}
           {activated && (
             <>
               <div className="grid md:grid-cols-3 gap-6 mb-16">
@@ -159,7 +161,7 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
           )}
         </div>
 
-        {/* RIGHT ZORO */}
+        {/* RIGHT */}
         <div className="flex-1 flex justify-center">
           <motion.img
             key={attacking ? "attack" : "idle"}
@@ -170,7 +172,7 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
             animate={{
               scale: attacking ? [1, 1.25, 1] : 1,
             }}
-            transition={{ duration: 0.2 }} // ⚡ faster
+            transition={{ duration: 0.2 }}
             className="w-80 cursor-pointer drop-shadow-[0_0_40px_rgba(0,255,100,0.7)]"
           />
         </div>
