@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { ExternalLink } from "lucide-react";
+
 import tshirt from "@/assets/gfg-tshirt.jpeg";
 import zoroIdle from "@/assets/jk.png";
 import zoroAttack from "@/assets/jk2.png";
@@ -45,8 +46,12 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // ✅ PRELOAD AUDIO (CRITICAL FIX)
   useEffect(() => {
-    audioRef.current = new Audio(swordSound);
+    const audio = new Audio(swordSound);
+    audio.preload = "auto";
+    audio.load();
+    audioRef.current = audio;
   }, []);
 
   const total = useCounter(1000, activated);
@@ -56,27 +61,26 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
   const handleZoro = () => {
     if (attacking) return;
 
-    // 🔊 SOUND
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
-    }
-
-    // ⚡ FORCE RENDER FIRST → THEN ANIMATE
+    // ⚡ STEP 1: Show flash instantly
     setFlash(true);
 
-    requestAnimationFrame(() => {
+    // 🔊 STEP 2: Play sound instantly (NO DELAY)
+    if (audioRef.current) {
+      const soundClone = audioRef.current.cloneNode(true) as HTMLAudioElement;
+      soundClone.play().catch(() => {});
+    }
+
+    // ⚔️ STEP 3: Attack AFTER flash (PERFECT SYNC)
+    setTimeout(() => {
       setAttacking(true);
       setActivated(true);
-    });
+    }, 50);
 
-    // ⚡ ensure flash visible first time
-    setTimeout(() => setFlash(false), 150);
+    // ⚡ Remove flash quickly
+    setTimeout(() => setFlash(false), 180);
 
-    // ⚔️ fast slash
-    setTimeout(() => {
-      setAttacking(false);
-    }, 200);
+    // 🔄 Reset attack
+    setTimeout(() => setAttacking(false), 250);
   };
 
   return (
@@ -88,11 +92,10 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
           : "bg-black text-white"
       }`}
     >
-      {/* ⚡ THUNDER (FIXED) */}
+      {/* ⚡ THUNDER */}
       {flash && (
         <div className="absolute inset-0 z-50 pointer-events-none flex items-center justify-center">
           <img
-            key={Date.now()} // 🔥 forces re-render every click
             src={thunder}
             className="w-full h-full object-cover animate-flash-ultra"
           />
@@ -144,7 +147,7 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
                 <a
                   href="https://leetcode.com/u/kjeevankumar08/"
                   target="_blank"
-                  className="px-6 py-3 bg-yellow-500 text-black rounded-full"
+                  className="px-6 py-3 bg-yellow-500 text-black rounded-full flex items-center gap-2"
                 >
                   LeetCode <ExternalLink size={16} />
                 </a>
@@ -152,7 +155,7 @@ const AchievementsSection: React.FC<Props> = ({ gear5 }) => {
                 <a
                   href="https://www.geeksforgeeks.org/profile/jeevankumar08"
                   target="_blank"
-                  className="px-6 py-3 bg-green-500 text-black rounded-full"
+                  className="px-6 py-3 bg-green-500 text-black rounded-full flex items-center gap-2"
                 >
                   GFG <ExternalLink size={16} />
                 </a>
