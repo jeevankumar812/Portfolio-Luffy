@@ -212,3 +212,29 @@
 .animate-flash-ultra {
   animation: flashUltra 0.12s ease;
 }
+
+.spin-fast {
+  animation: spinClockwise 0.8s linear;
+}
+
+@keyframes spinClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg); /* 🔥 2 full clockwise spins */
+  }
+}
+
+.spin-once-slow {
+  animation: spinOnceSlow 1.2s linear forwards;
+}
+
+@keyframes spinOnceSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg); /* ✅ ONE clockwise rotation */
+  }
+}

@@ -1,19 +1,27 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import skull from "@/assets/op.png";
 
 type BountyProps = {
   gear5: boolean;
 };
 
 const BountyPoster: React.FC<BountyProps> = ({ gear5 }) => {
-  const [unlocked, setUnlocked] = useState<boolean>(false);
+  const [rotating, setRotating] = useState(false);
+  const [claimed, setClaimed] = useState(false);
 
   const handleUnlock = () => {
-    setUnlocked(true);
+    if (rotating || claimed) return;
 
+    setRotating(true);
+
+    // ⏳ after rotation completes
     setTimeout(() => {
+      setRotating(false);
+      setClaimed(true);
+
+      // open resume
       window.open("/resume.pdf", "_blank");
-    }, 800);
+    }, 1200); // match animation duration
   };
 
   return (
@@ -25,20 +33,12 @@ const BountyPoster: React.FC<BountyProps> = ({ gear5 }) => {
           : "bg-black"
       }`}
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, rotate: -2 }}
-        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-        whileHover={{ scale: 1.03 }}
+      <div
         className={`relative p-8 max-w-md w-full rounded-md border-[6px] text-black ${
           gear5
             ? "bg-white border-gray-400 shadow-[0_0_30px_rgba(0,0,0,0.15)]"
             : "bg-yellow-200 border-black shadow-[0_0_40px_rgba(255,200,100,0.4)]"
         }`}
-        style={{
-          backgroundImage: gear5
-            ? "none"
-            : "url('https://www.transparenttextures.com/patterns/old-paper.png')",
-        }}
       >
         {/* 🔥 TITLE */}
         <h2 className="text-4xl font-black text-center tracking-widest">
@@ -63,60 +63,42 @@ const BountyPoster: React.FC<BountyProps> = ({ gear5 }) => {
             Jeevan Kumar
           </h3>
 
-          <p
-            className={`text-lg font-semibold ${
-              gear5 ? "text-gray-700" : "text-black"
-            }`}
-          >
+          <p className="text-lg font-semibold">
             Backend Pirate ⚔️
           </p>
         </div>
 
         {/* ⚔️ CRIMES */}
         <div className="mt-6 text-sm">
-          <p className="font-bold text-base mb-2">CRIMES:</p>
-
-          <ul className="list-disc ml-5 space-y-1 font-medium">
+          <p className="font-bold mb-2">CRIMES:</p>
+          <ul className="list-disc ml-5 space-y-1">
             <li>Built scalable backend systems</li>
             <li>Mastered MERN stack</li>
             <li>Solved 1000+ DSA problems</li>
           </ul>
         </div>
 
-        {/* 🔐 LOCK SYSTEM */}
-        <div className="mt-8 text-center">
-          {!unlocked ? (
-            <motion.button
-              whileTap={{ scale: 0.9 }}
+        {/* ☠️ SKULL / CLAIM */}
+        <div className="mt-8 flex justify-center">
+          {!claimed ? (
+            <img
+              src={skull}
+              alt="skull"
               onClick={handleUnlock}
-              className={`px-6 py-3 rounded-full flex items-center justify-center gap-2 mx-auto transition ${
-                gear5
-                  ? "bg-black text-white hover:bg-gray-800"
-                  : "bg-black text-white hover:bg-red-600"
+              className={`w-16 h-16 cursor-pointer ${
+                rotating ? "spin-once-slow" : ""
               }`}
-            >
-              🔒 Unlock Bounty
-            </motion.button>
+            />
           ) : (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className={`font-bold ${
-                gear5 ? "text-black" : "text-green-700"
-              }`}
-            >
-              🔓 Bounty Claimed!
-            </motion.div>
+            <div className="text-green-700 font-bold text-lg">
+              ☠️ Bounty Claimed!
+            </div>
           )}
         </div>
 
-        {/* 🔥 BORDER EFFECT */}
-        <div
-          className={`absolute inset-0 pointer-events-none border-[3px] opacity-20 ${
-            gear5 ? "border-gray-400" : "border-black"
-          }`}
-        ></div>
-      </motion.div>
+        {/* 🔥 BORDER */}
+        <div className="absolute inset-0 border-[3px] opacity-20 border-black pointer-events-none"></div>
+      </div>
     </section>
   );
 };
