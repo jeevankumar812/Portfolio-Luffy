@@ -33,6 +33,7 @@ const Index: React.FC = () => {
       <AchievementsSection gear5={gear5}/>
       <ProjectsSection gear5={gear5} />
       <SystemDesignSection gear5={gear5}/>
+     
       <TimelineSection />
       <ContactSection gear5={gear5}/>
     </div>
