@@ -21,7 +21,7 @@ const sagas = [
     name: "Alabasta Saga",
     color: "yellow",
     days: [
-      { day: "Day 6", title: "Caching", link: "#" },
+      { day: "Day 6", title: "Sql vs NoSql", link: "https://github.com/jeevankumar812/System-Design/tree/main/Day6" },
     ],
   },
 ];
